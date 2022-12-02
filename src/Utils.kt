@@ -15,3 +15,7 @@ fun readInts(name: String) = readInput(name).map { it.toInt() }
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
     .toString(16)
     .padStart(32, '0')
+
+fun checkTest(result: Int, expected: Int) {
+    check(result == expected) { "Test check failed, wrong result: $result" }
+}

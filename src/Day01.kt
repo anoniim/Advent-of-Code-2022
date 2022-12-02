@@ -1,46 +1,44 @@
 fun main() {
-    fun parseElves(input: List<String>): MutableList<Elf> {
-        var i = 0
-        val elves = mutableListOf(Elf(i))
-        input.forEach {
-            if (it != "") {
-                elves[i].register(it.toInt())
+    fun parseElves(input: List<String>): List<Elf> {
+        val elves = mutableListOf(Elf())
+        input.forEach { meal ->
+            if (meal != "") {
+                elves.last().registerMeal(meal.toInt())
             } else {
-                elves.add(Elf(++i))
+                // Empty line, add a new Elf
+                elves.add(Elf())
             }
         }
         return elves
     }
 
     fun part1(input: List<String>): Int {
-        val elves = parseElves(input)
-        return elves.maxOfOrNull { it.total() } ?: 0
+        return parseElves(input).maxOf { it.totalCalories() }
     }
 
     fun part2(input: List<String>): Int {
-        return parseElves(input).map { it.total() }.sorted().takeLast(3).sum()
+        return parseElves(input).map { it.totalCalories() }.sorted().takeLast(3).sum()
     }
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day01_test")
-    val part1 = part1(testInput)
-    val part2 = part2(testInput)
-    check(part1 == 24000) { "Check failed, wrong result: $part1" }
-    check(part2 == 45000) { "Check failed, wrong result: $part2" }
+    checkTest(part1(testInput), 24000)
+    checkTest(part2(testInput), 45000)
 
     val input = readInput("Day01")
     println(part1(input))
     println(part2(input))
 }
 
-private class Elf(val index: Int) {
+private class Elf {
 
-    val calories = mutableListOf<Int>()
-    fun register(caloriesPerItem: Int) {
-        calories.add(caloriesPerItem)
+    val meals = mutableListOf<Int>()
+
+    fun registerMeal(caloriesPerItem: Int) {
+        meals.add(caloriesPerItem)
     }
 
-    fun total(): Int {
-        return calories.sum()
+    fun totalCalories(): Int {
+        return meals.sum()
     }
 }
