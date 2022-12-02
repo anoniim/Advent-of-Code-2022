@@ -1,4 +1,18 @@
 fun main() {
+    Day1().run()
+}
+
+private class Day1 : Day(1) {
+    override fun part1(input: List<String>): Int {
+        // Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
+        return parseElves(input).maxOf { it.totalCalories() }
+    }
+
+    override fun part2(input: List<String>): Int {
+        // Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
+        return parseElves(input).map { it.totalCalories() }.sorted().takeLast(3).sum()
+    }
+
     fun parseElves(input: List<String>): List<Elf> {
         val elves = mutableListOf(Elf())
         input.forEach { meal ->
@@ -11,23 +25,6 @@ fun main() {
         }
         return elves
     }
-
-    fun part1(input: List<String>): Int {
-        return parseElves(input).maxOf { it.totalCalories() }
-    }
-
-    fun part2(input: List<String>): Int {
-        return parseElves(input).map { it.totalCalories() }.sorted().takeLast(3).sum()
-    }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    checkTest(part1(testInput), 24000)
-    checkTest(part2(testInput), 45000)
-
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
 }
 
 private class Elf {
