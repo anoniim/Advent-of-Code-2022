@@ -6,6 +6,7 @@ fun main() {
 }
 
 private class Day0 : Day(0) {
+
     override fun part1(input: List<String>): Int {
         //
         return -1
