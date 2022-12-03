@@ -1,5 +1,8 @@
 fun main() {
-    Day1().run()
+    Day1().run(
+        24000,
+        45000
+    )
 }
 
 private class Day1 : Day(1) {
