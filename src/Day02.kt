@@ -1,7 +1,7 @@
 fun main() {
     Day2().run(
         15,
-        -1
+        12
     )
 }
 
@@ -14,7 +14,7 @@ private class Day2 : Day(2) {
 
     override fun part2(input: List<String>): Int {
         // Following the Elf's instructions for the second column, what would your total score be if everything goes exactly according to your strategy guide?
-        return -1
+        return input.sumOf { GameRound(it).getScorePart2() }
     }
 }
 
@@ -27,17 +27,40 @@ private class GameRound(val input: String) {
 
     private fun resultScore(shapes: List<Int>): Int {
         if (shapes[0] == shapes[1]) {
-            // draw
-            return 3
+            return 3 // draw
         }
         val result = shapes[0] - shapes[1]
         return if (result == -1 || result == 2) {
-            // win
-            6
+            6 // win
         } else {
-            // loss
-            0
+            0 // loss
         }
+    }
+
+    fun getScorePart2(): Int {
+        val inputList = input.split(" ")
+        val theirShape = Shape.from(inputList[0])
+        return resultScorePart2(theirShape.score, inputList[1])
+    }
+
+    private fun resultScorePart2(theirShapeScore: Int, end: String): Int {
+        return when (end) {
+            "X" -> loseShape(theirShapeScore)
+            "Y" -> theirShapeScore + 3
+            "Z" -> winShape(theirShapeScore) + 6
+            else -> throw Exception("invalid input")
+        }
+
+    }
+
+    private fun loseShape(theirShapeScore: Int): Int {
+        val myShape = theirShapeScore - 1
+        return if (myShape == 0) 3 else myShape
+    }
+
+    private fun winShape(theirShapeScore: Int): Int {
+        val myShape = theirShapeScore + 1
+        return if (myShape == 4) 1 else myShape
     }
 }
 
