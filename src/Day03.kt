@@ -9,7 +9,7 @@ private class Day3 : Day(3) {
 
     override fun part1(input: List<String>): Int {
         // What is the sum of the priorities of those item types?
-        val sharedItemTypes = mutableSetOf<ItemType>()
+        val sharedItemTypes = mutableListOf<ItemType>()
         var count = 0
         input.forEach { rucksack ->
             val compartments = getCompartments(rucksack)
@@ -38,17 +38,22 @@ private class Day3 : Day(3) {
     }
 
     private fun getSharedItemTypes(compartments: Compartments): Set<ItemType> {
-        return mutableSetOf<ItemType>().apply {
-            compartments.first.forEach {
-                if (compartments.second.contains(it)) {
-                    add(it)
-                }
-            }
-        }
+        return compartments.first.toSet() intersect compartments.second.toSet()
     }
 
+//    private fun getSharedItemTypes(compartments: Compartments): Set<ItemType> {
+//        return mutableSetOf<ItemType>().apply {
+//            compartments.first.forEach {
+//                if (compartments.second.contains(it)) {
+//                    add(it)
+//                }
+//            }
+//        }
+//    }
+
     override fun part2(input: List<String>): Int {
-        //
+        // Find the item type that corresponds to the badges of each three-Elf group.
+        // What is the sum of the priorities of those item types?
         return -1
     }
 
