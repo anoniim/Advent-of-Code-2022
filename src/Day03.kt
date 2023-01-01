@@ -1,7 +1,7 @@
 fun main() {
     Day3().run(
         157,
-        -1
+        70
     )
 }
 
@@ -39,8 +39,13 @@ private class Day3 : Day(3) {
     override fun part2(input: List<String>): Int {
         // Find the item type that corresponds to the badges of each three-Elf group.
         // What is the sum of the priorities of those item types?
-        return -1
+        return input.chunked(3) { rucksackGroup -> getCommonItemTypes(rucksackGroup) }
+            .map { it.first() }
+            .sumOf { getPriority(it) }
     }
+
+    private fun getCommonItemTypes(rucksackGroup: List<String>) =
+        rucksackGroup[0].toSet() intersect rucksackGroup[1].toSet() intersect rucksackGroup[2].toSet()
 
 }
 
